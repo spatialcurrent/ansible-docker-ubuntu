@@ -1,0 +1,43 @@
+---
+
+- name: Add Docker APT Key from KeyServer
+  become: yes
+  become_user: root
+  apt_key:
+    url: "{{ DOCKER_KEY }}"
+
+- name: Add Docker to APT Sources
+  become: yes
+  become_user: root
+  lineinfile:
+    dest: /etc/apt/sources.list.d/docker.list
+    regexp: "^deb(\\s+)"
+    line: "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
+    state: present
+    create: yes
+    owner: root
+    group: root
+    mode: 0644
+
+- name: "apt-get update"
+  apt: update_cache=yes
+  become: yes
+  become_user: root
+
+- name: Install Docker
+  become: yes
+  become_user: root
+  apt: name="docker-ce" state=latest
+
+- name: Restart Docker Service
+  become: yes
+  become_user: root
+  service: name=docker state=restarted
+
+- name: "Add SSH User to Docker Group"
+  become: yes
+  become_user: root
+  user:
+    name: "{{ ansible_ssh_user }}"
+    groups: "docker"
+    append: yes
