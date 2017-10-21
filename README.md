@@ -12,7 +12,7 @@ Within Ansible playbook:
 ```
 ...
 roles:
-  - ansible-dockers-ubuntu
+  - ansible-docker-ubuntu
 ...
 ```
 
