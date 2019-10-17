@@ -60,7 +60,6 @@
   become: yes
   become_user: root
   shell: "chmod +x /opt/docker-compose-{{ ansible_facts['system' ]}}-{{ ansible_facts['architecture'] }}"
-  warn: false
 
 - name: "Install docker-compose"
   become: yes
