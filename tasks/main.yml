@@ -39,6 +39,7 @@
   become: yes
   become_user: root
   service: name=docker state=restarted
+  when: DOCKER_RESTART
 
 - name: "Add SSH User to Docker Group"
   become: yes
